@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textPersonName"
+        android:hint="Nombre de la receta"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtNombreReceta"/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="numberSigned"
+        android:maxLength="3"
+        android:clickable="true"
+        android:hint="Tiempo en minutos"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edttiempoDeCoccion"
+        app:layout_constraintTop_toBottomOf="@+id/edtNombreReceta"/>
+
+    <EditText
+        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textPersonName"
+        android:hint="Ingredientes"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtingredientes"
+        app:layout_constraintTop_toBottomOf="@+id/edttiempoDeCoccion"/>
+
+    <EditText
+        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textPersonName"
+        android:hint="Descripcion de la recta"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtDescripcion"
+        app:layout_constraintTop_toBottomOf="@+id/edtingredientes"/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textPersonName"
+        android:hint="url de la foto"
+        android:ems="10"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edtphoto"
+        app:layout_constraintTop_toBottomOf="@+id/edtDescripcion"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
+        android:id="@+id/insertarDialog"
+        app:layout_constraintTop_toBottomOf="@+id/edtphoto"
+        android:text="INSERTAR"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

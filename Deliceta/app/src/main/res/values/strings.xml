@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Deliceta</string>
+    <string name="entrantes">Entrantes</string>
+    <string name="platos">Platos</string>
+    <string name="postres">Postres</string>
+</resources>
