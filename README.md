@@ -1,6 +1,6 @@
 # Deliceta
 
-Proyecto fin de CFGS DAM
+Proyecto final de CFGS DAM
 
 ### · ¿ Qué es ? 📋
 <p>Se trata de una app de recetas de cocina. Como un album de recetas vacío que el usuario puede rellenar con sus recetas favoritas.
