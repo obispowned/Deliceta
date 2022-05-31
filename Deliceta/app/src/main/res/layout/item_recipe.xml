@@ -19,13 +19,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         tools:background="@color/turquesaOscuro"
         android:id="@+id/photoreceta"
         android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="10dp"
         />
 
 
