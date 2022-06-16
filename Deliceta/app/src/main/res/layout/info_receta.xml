@@ -29,6 +29,13 @@
 
     </androidx.cardview.widget.CardView>
 
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:layout_width="321dp"
         android:layout_height="389dp"
@@ -39,22 +46,40 @@
         app:layout_constraintTop_toBottomOf="@+id/infoCard">
 
         <TextView
+            android:id="@+id/infoNameReceta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Nombre de la receta"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
             android:id="@+id/infoTiempoCoccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            tools:text="20 minutos"
+            android:gravity="right"/>
 
         <TextView
             android:id="@+id/infoIngredientes"
             android:layout_width="match_parent"
+            tools:text="Ingredientes"
+            android:textSize="15sp"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="TextView" android:gravity="center"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/infoDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            tools:text="Descripcion"
+            android:textSize="15sp"
+            android:gravity="center"/>
+
     </LinearLayout>
 
 

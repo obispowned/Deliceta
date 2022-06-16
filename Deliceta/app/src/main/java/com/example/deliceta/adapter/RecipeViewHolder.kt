@@ -20,28 +20,30 @@ class RecipeViewHolder(view:View): RecyclerView.ViewHolder(view) {
     val binding = ItemRecipeBinding.bind(view)
 
 
-    fun render(recipeModel: Recipe){
+    fun render(recipeModel: Recipe, onClickListener:(Recipe) -> Unit){
         binding.nombreReceta.text = recipeModel.recipename
         binding.tiempoCoccion.text = recipeModel.recipetime
         binding.ingredientes.text = recipeModel.recipeingredients
         binding.descripcion.text = recipeModel.recipedescription
         Glide.with(binding.photoreceta.context).load(recipeModel.recipeurl).into(binding.photoreceta)
-       binding.photoreceta.setOnClickListener{
+
+        itemView.setOnClickListener { onClickListener(recipeModel) }
+    /*
+        binding.photoreceta.setOnClickListener{
+
             Toast.makeText(binding.photoreceta.context, recipeModel.recipename, Toast.LENGTH_SHORT).show()
         }
-
 
 
 
         itemView.setOnClickListener{
             Toast.makeText(binding.photoreceta.context, recipeModel.recipetime, Toast.LENGTH_SHORT)
                 .show()
-            /*val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.insertar_layout, null)
             builder.setView(view) //PASAMOS LA VISTA AL BUILDER
             val dialog = builder.create()
-            dialog.show()*/
-
-        }
+            dialog.show()
+        }*/
     }
 }

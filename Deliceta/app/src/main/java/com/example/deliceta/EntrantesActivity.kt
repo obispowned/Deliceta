@@ -1,19 +1,22 @@
 package com.example.deliceta
 
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.provider.ContactsContract
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.deliceta.RecipeProvider.Companion.recipeList
 import com.example.deliceta.adapter.RecipeAdapter
 import com.example.deliceta.application.App
 import com.example.deliceta.database.entities.Entrantes
 import com.example.deliceta.databinding.ActivityEntrantesBinding
+import com.example.deliceta.databinding.InsertarLayoutBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,7 +25,6 @@ import kotlinx.coroutines.withContext
 class EntrantesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEntrantesBinding
-    var numero = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -38,7 +40,67 @@ class EntrantesActivity : AppCompatActivity() {
         refreshApp()
 
 
+    }
 
+    fun volcar_en_info_receta(recipe: Recipe)
+    {
+
+    }
+
+    fun onItemSelected(recipe: Recipe){
+        /*val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle(recipe.recipename)
+            setMessage("We have a message")
+            show()
+        }*/
+
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.info_receta, null)
+        builder.setView(view) //PASAMOS LA VISTA AL BUILDER
+        val dialog = builder.create()
+
+        val info_name = view.findViewById<TextView>(R.id.infoNameReceta)
+        info_name.setText(recipe.recipename).toString()
+        val info_time = view.findViewById<TextView>(R.id.infoTiempoCoccion)
+        info_time.setText(recipe.recipetime).toString()
+        val info_ingreds = view.findViewById<TextView>(R.id.infoIngredientes)
+        info_ingreds.setText(recipe.recipeingredients).toString()
+        val info_descripcion = view.findViewById<TextView>(R.id.infoDescripcion)
+        info_descripcion.setText(recipe.recipedescription).toString()
+        val info_photo = view.findViewById<ImageView>(R.id.infoPhotoreceta)
+        Glide.with(info_photo.context).load(recipe.recipename).into(view.findViewById(R.id.infoPhotoreceta))
+
+
+        dialog.show()
+        val delete = view.findViewById<ImageButton>(R.id.deleteButton)
+        delete.setOnClickListener {
+            dialog.dismiss()
+            val builder = AlertDialog.Builder(this)
+            val view = layoutInflater.inflate(R.layout.delete, null)
+            builder.setView(view) //PASAMOS LA VISTA AL BUILDER
+            val dialog = builder.create()
+            dialog.show()
+            val borrarReceta = view.findViewById<Button>(R.id.borrar)
+            val cancelar = view.findViewById<Button>(R.id.cancelar)
+            borrarReceta.setOnClickListener {
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        var recipeEntrante =
+                            App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
+                        App.getDb().entrantesDao().delete(recipeEntrante)
+                    }
+                }
+                dialog.dismiss()
+            }
+            cancelar.setOnClickListener {
+                dialog.dismiss()
+            }
+
+
+        }
     }
 
     private fun refreshApp(){
@@ -57,13 +119,17 @@ class EntrantesActivity : AppCompatActivity() {
         val manager = LinearLayoutManager(this)
         //val decoration = DividerItemDecoration(this, manager.orientation)
         binding.recyclerRecipe.layoutManager = LinearLayoutManager(this)
-        binding.recyclerRecipe.adapter = RecipeAdapter(RecipeProvider.recipeList)
+        binding.recyclerRecipe.adapter = RecipeAdapter(RecipeProvider.recipeList, {recipee -> onItemSelected(recipee) })
         //binding.recyclerRecipe.addItemDecoration(decoration)
     }
 
+
+/*
     fun onItemSelected(recipe : Recipe){
         Toast.makeText(this, recipe.recipename, Toast.LENGTH_SHORT).show()
     }
+    */
+
 
     /*MOSTRAR U OBTENER DATOS DE LA BBDD*/
     private fun giveTheRecipes() {
@@ -75,7 +141,6 @@ class EntrantesActivity : AppCompatActivity() {
             while (i < entrantes.size) {
                 recipeList.add(
                     i, Recipe(
-                        recipetype = 1,
                         recipename = entrantes[i].nombre,
                         recipetime = entrantes[i].duracion + " minutos",
                         recipeingredients = entrantes[i].ingredientes,
@@ -87,6 +152,7 @@ class EntrantesActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
     private fun setupFloatingActionButton() {
