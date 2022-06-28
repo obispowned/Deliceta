@@ -1,8 +1,9 @@
 package com.example.deliceta.database.dao
 
+import android.net.Uri
 import androidx.room.*
-import com.example.deliceta.Recipe
 import com.example.deliceta.database.entities.Entrantes
+
 
 @Dao
 interface EntrantesDao {

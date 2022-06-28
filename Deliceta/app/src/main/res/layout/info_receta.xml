@@ -31,10 +31,48 @@
 
     <ImageButton
         android:id="@+id/deleteButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/textotiempo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:hint="Minutos"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="343dp"
+        tools:layout_editor_absoluteY="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toTopOf="@id/timeButton"/>
+    <TextView
+        android:id="@+id/textocuentaatras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="343dp"
+        tools:layout_editor_absoluteY="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toBottomOf="@id/timeButton"/>
+
+
+    <ImageButton
+        android:id="@+id/timeButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deleteButton"
+        android:layout_marginRight="10dp"
+        android:onClick="play"
+        app:srcCompat="@android:drawable/ic_lock_idle_alarm"/>
 
     <LinearLayout
         android:layout_width="321dp"
