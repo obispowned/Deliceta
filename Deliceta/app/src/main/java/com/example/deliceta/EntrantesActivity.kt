@@ -106,6 +106,12 @@ class EntrantesActivity : AppCompatActivity() {
             }
         }
     }
+    /*
+       CUANDO EL IMAGEBUTTON DE la foto SEA PULSADO, OCURRIRÁ LA FUNCION camera()
+       */
+    fun camera(view: View){
+        Toast.makeText(this, "CAMBIAR FOTO", Toast.LENGTH_LONG).show()
+    }
 
     /*
     CUANDO EL IMAGEBUTTON DEL TEMPORIZADOR SEA PULSADO, OCURRIRÁ LA FUNCION PLAY()
