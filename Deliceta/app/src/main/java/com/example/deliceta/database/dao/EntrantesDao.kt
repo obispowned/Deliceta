@@ -16,7 +16,7 @@ interface EntrantesDao {
     @Insert
     fun save(entrantes: Entrantes)
     @Update
-    fun update(entrantes: Recipe)
+    fun update(entrantes: Entrantes)
     @Delete
     fun delete(entrantes: Entrantes)
 }

@@ -49,7 +49,7 @@ class EntrantesActivity : AppCompatActivity() {
     fun onClickFav(recipe: Recipe) {
         val checkk = findViewById<CheckBox>(R.id.FavInfoRecipe)
         if (checkk.isChecked()) {
-            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, recipe.recipename, Toast.LENGTH_SHORT).show()
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
@@ -57,8 +57,9 @@ class EntrantesActivity : AppCompatActivity() {
                     App.getDb().entrantesDao().update(recipeEntrante)
                 }
             }
+            checkk?.setEnabled(true)
         }else if (!checkk.isChecked()) {
-            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, recipe.recipetime, Toast.LENGTH_SHORT).show()
             lifecycleScope.launch {
                   withContext(Dispatchers.IO) {
                       var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
