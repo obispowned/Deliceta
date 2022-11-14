@@ -5,4 +5,5 @@ data class Recipe (
     val recipetime:String,
     val recipeingredients:String,
     val recipedescription: String,
+    var recipefav: Boolean,
     val recipeurl:String)

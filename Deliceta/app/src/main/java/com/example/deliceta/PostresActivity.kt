@@ -142,7 +142,14 @@ CUANDO SE HACE CLICK A UN ITEM
 
     private fun initRecyclerView() {
          binding.recyclerRecipe3.layoutManager = LinearLayoutManager(this)
-         binding.recyclerRecipe3.adapter = RecipeAdapter(RecipeProvider.recipeList, {recipee -> onItemSelected(recipee) }, {recipee-> onPhotoSelected(recipee)})
+         binding.recyclerRecipe3.adapter = RecipeAdapter(RecipeProvider.recipeList,
+             {recipee -> onItemSelected(recipee) },
+             {recipee-> onPhotoSelected(recipee)},
+             {recipee-> onClickFav(recipee)})
+    }
+
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
     }
 
     private fun giveTheRecipes() {
@@ -158,6 +165,7 @@ CUANDO SE HACE CLICK A UN ITEM
                         recipetime = postres[i].duracion + " minutos",
                         recipeingredients = postres[i].ingredientes,
                         recipedescription = postres[i].descripcion,
+                        recipefav = postres[i].fav,
                         recipeurl = postres[i].urlphoto)
                 )
                 i++
@@ -197,6 +205,7 @@ CUANDO SE HACE CLICK A UN ITEM
                                     duracion = tiempoPostre,
                                     ingredientes = ingredientesPostre,
                                     descripcion = descripcionPostre,
+                                    fav = false,
                                     urlphoto = fotoPostre)
                             )
                         }

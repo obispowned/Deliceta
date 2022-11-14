@@ -56,7 +56,14 @@ class PlatosActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         binding.recyclerRecipe2.layoutManager = LinearLayoutManager(this)
-        binding.recyclerRecipe2.adapter = RecipeAdapter(recipeList, {recipee -> onItemSelected(recipee) }, {recipee-> onPhotoSelected(recipee)})
+        binding.recyclerRecipe2.adapter = RecipeAdapter(recipeList,
+            {recipee -> onItemSelected(recipee) },
+            {recipee-> onPhotoSelected(recipee)},
+            {recipee-> onClickFav(recipee)})
+    }
+
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
     }
 
     fun onItemSelected(recipe: Recipe) {
@@ -152,6 +159,7 @@ class PlatosActivity : AppCompatActivity() {
                         recipetime = platos[i].duracion + " minutos",
                         recipeingredients = platos[i].ingredientes,
                         recipedescription = platos[i].descripcion,
+                        recipefav = platos[i].fav,
                         recipeurl = platos[i].urlphoto
                     )
                 )
@@ -164,14 +172,11 @@ class PlatosActivity : AppCompatActivity() {
         binding.nuevaReceta2.setOnClickListener {
             Toast.makeText(applicationContext, "Nueva Receta", Toast.LENGTH_SHORT).show()
 
-
             val builder = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.insertar_layout, null)
             builder.setView(view) //PASAMOS LA VISTA AL BUILDER
             val dialog = builder.create()
             dialog.show()
-
-
             val btnInsert: Button = view.findViewById(R.id.insertarDialog)
             btnInsert.setOnClickListener {
                 val nombrePlato: String =
@@ -194,6 +199,7 @@ class PlatosActivity : AppCompatActivity() {
                                     duracion = tiempoPlato,
                                     ingredientes = ingredientesPlato,
                                     descripcion = descripcionPlato,
+                                    fav = false,
                                     urlphoto = fotoPlato
                                 )
                             )

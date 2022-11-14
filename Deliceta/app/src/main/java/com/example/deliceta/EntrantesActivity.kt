@@ -46,6 +46,29 @@ class EntrantesActivity : AppCompatActivity() {
         refreshApp()
     }
 
+    fun onClickFav(recipe: Recipe) {
+        val checkk = findViewById<CheckBox>(R.id.FavInfoRecipe)
+        if (checkk.isChecked()) {
+            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
+                    recipeEntrante.fav = true
+                    App.getDb().entrantesDao().update(recipeEntrante)
+                }
+            }
+        }else if (!checkk.isChecked()) {
+            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                  withContext(Dispatchers.IO) {
+                      var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
+                      recipeEntrante.fav = false
+                      App.getDb().entrantesDao().update(recipeEntrante)
+                  }
+            }
+        }
+    }
+
     /*
     CUANDO SE HACE CLICK EN LA FOTO DE UN ITEM
     */
@@ -159,7 +182,10 @@ class EntrantesActivity : AppCompatActivity() {
     */
     private fun initRecyclerView() {
         binding.recyclerRecipe.layoutManager = LinearLayoutManager(this)
-        binding.recyclerRecipe.adapter = RecipeAdapter(RecipeProvider.recipeList, {recipee -> onItemSelected(recipee) }, {recipee-> onPhotoSelected(recipee)})
+        binding.recyclerRecipe.adapter = RecipeAdapter(RecipeProvider.recipeList,
+            {recipee -> onItemSelected(recipee)},
+            {recipee-> onPhotoSelected(recipee)},
+            {recipee-> onClickFav(recipee)})
     }
 
     /*
@@ -178,6 +204,7 @@ class EntrantesActivity : AppCompatActivity() {
                         recipetime = entrantes[i].duracion + " minutos",
                         recipeingredients = entrantes[i].ingredientes,
                         recipedescription = entrantes[i].descripcion,
+                        recipefav = entrantes[i].fav,
                         recipeurl = entrantes[i].urlphoto
                     )
                 )
@@ -210,8 +237,7 @@ class EntrantesActivity : AppCompatActivity() {
                 val descripcionEntrante: String =
                     view.findViewById<EditText>(R.id.edtDescripcion).text.toString()
                 val fotoEntrante: String= view.findViewById<EditText>(R.id.edtphoto).text.toString()
-                if ((nombreEntrante != null && tiempoEntrante != null && ingredientesEntrante != null && descripcionEntrante != null && fotoEntrante != null) &&
-                    (nombreEntrante != "" && tiempoEntrante != "" && ingredientesEntrante != "" && descripcionEntrante != "" && fotoEntrante != "" && tiempoEntrante.toInt() > 0)) {
+                if (validParamsStringsToRecipe(nombreEntrante, tiempoEntrante,ingredientesEntrante, descripcionEntrante, fotoEntrante) == 1 && tiempoEntrante.toInt() > 0) {
                     lifecycleScope.launch {
                         withContext(Dispatchers.IO)
                         {
@@ -221,6 +247,7 @@ class EntrantesActivity : AppCompatActivity() {
                                     duracion = tiempoEntrante,
                                     ingredientes = ingredientesEntrante,
                                     descripcion = descripcionEntrante,
+                                    fav = false,
                                     urlphoto = fotoEntrante
                                 )
                             )
@@ -233,5 +260,14 @@ class EntrantesActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
+    }
+
+    fun validParamsStringsToRecipe(vararg recipeDetails: String): Int {
+        for (recipeDetail in recipeDetails)
+        {
+            if (recipeDetail==null || recipeDetail=="")
+                return 0
+        }
+        return 1
     }
 }
