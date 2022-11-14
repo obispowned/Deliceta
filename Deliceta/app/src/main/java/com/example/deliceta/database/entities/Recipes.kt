@@ -15,7 +15,7 @@ data class Entrantes (
     val descripcion:String,
     var fav: Boolean,
     val urlphoto:String
-    )
+)
 
 @Entity (tableName="platos")
 data class Platos (

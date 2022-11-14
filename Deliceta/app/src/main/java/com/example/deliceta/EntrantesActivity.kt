@@ -1,14 +1,9 @@
 package com.example.deliceta
 
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.media.RingtoneManager
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -32,12 +27,11 @@ import kotlinx.coroutines.withContext
 
 class EntrantesActivity : AppCompatActivity() {
 
-    private val REQUEST_GALLERY = 1001
     private lateinit var binding: ActivityEntrantesBinding
     var textoTiempo:EditText?=null
     var textoTemporizador:TextView?=null
     var btntime:ImageButton?=null
-    private lateinit var info_photo: ImageView
+
         override fun onCreate(savedInstanceState: Bundle?) {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -45,10 +39,34 @@ class EntrantesActivity : AppCompatActivity() {
         binding = ActivityEntrantesBinding.inflate(layoutInflater) //
         setContentView(binding.root)
 
+        recipeList.clear()
         giveTheRecipes()
         initRecyclerView()
         setupFloatingActionButton()
         refreshApp()
+    }
+
+    fun onClickFav(recipe: Recipe) {
+        val checkk = findViewById<CheckBox>(R.id.FavInfoRecipe)
+        if (checkk.isChecked()) {
+            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
+                    recipeEntrante.fav = true
+                    App.getDb().entrantesDao().update(recipeEntrante)
+                }
+            }
+        }else if (!checkk.isChecked()) {
+            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                  withContext(Dispatchers.IO) {
+                      var recipeEntrante = App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
+                      recipeEntrante.fav = false
+                      App.getDb().entrantesDao().update(recipeEntrante)
+                  }
+            }
+        }
     }
 
     /*
@@ -57,33 +75,6 @@ class EntrantesActivity : AppCompatActivity() {
     fun onPhotoSelected(recipe: Recipe) {
         Toast.makeText(this, recipe.recipename, Toast.LENGTH_LONG).show()
     }
-
-    /*
-    CUANDO SE HACE CLICK EN FAV DE UN ITEM
-    */
-    fun onClickFav(recipe: Recipe){
-        val checkk = findViewById<CheckBox>(R.id.FavInfoRecipe)
-        if (checkk.isChecked()) {
-            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
-            /*           lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    recipe.recipefav = true
-                    //App.getDb().entrantesDao().update(recipe)
-                }
-            }*/
-        }
-        else if (!checkk.isChecked()) {
-            Toast.makeText(this, "sadad", Toast.LENGTH_SHORT).show()
- /*           lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    var recipeEntrante =
-                        App.getDb().entrantesDao().entrantesPorNombre(recipe.recipename)
-                    App.getDb().entrantesDao().delete(recipeEntrante)
-                }
-            }*/
-        }
-    }
-
 
     /*
     CUANDO SE HACE CLICK A UN ITEM
@@ -104,7 +95,7 @@ class EntrantesActivity : AppCompatActivity() {
         info_ingreds.setText(recipe.recipeingredients).toString()
         val info_descripcion = view.findViewById<TextView>(R.id.infoDescripcion)
         info_descripcion.setText(recipe.recipedescription).toString()
-        info_photo = view.findViewById<ImageView>(R.id.infoPhotoreceta)
+        val info_photo = view.findViewById<ImageView>(R.id.infoPhotoreceta)
         Glide.with(info_photo.context).load(recipe.recipeurl).into(view.findViewById(R.id.infoPhotoreceta))
         /*SE MUESTRA EL CUADRO DE DIALOGO CON LOS DATOS YA CARGADOS*/
         dialog.show()
@@ -142,50 +133,7 @@ class EntrantesActivity : AppCompatActivity() {
        CUANDO EL IMAGEBUTTON DE la foto SEA PULSADO, OCURRIRÁ LA FUNCION camera()
        */
     fun camera(view: View){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                val permisoArchivos = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                requestPermissions(permisoArchivos, REQUEST_GALLERY)
-            }else{
-                muestraGaleria()
-            }
-        }else{
-            muestraGaleria()
-        }
-    }
-//comprobamos los permisos
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            REQUEST_GALLERY ->{
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    muestraGaleria()
-                else
-                    Toast.makeText(this, "NO HAY PERMISOS", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun muestraGaleria(){
-        val intentGaleria = Intent(Intent.ACTION_PICK)
-        intentGaleria.type = "image/*"
-        startActivityForResult(intentGaleria, REQUEST_GALLERY)
-    }
-    //recuperamos imagen de la galeria
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GALLERY) //si selecciono la foto y la peticion viene de la galeria entonces cambiamos la foto
-        {
-            info_photo.setImageURI(data?.data)
-//no funciona porque hay que guardarlo en la bbdd pero en la bbd esta guardado un string como url y no un imageview
-            recipeList.clear()
-            giveTheRecipes()
-//asique actualizamos cambios y vemos que la foto ha cambiado pero basta con volver a entrar y salir o refrescar para ver que sigue la foto anterior
-        }
+        Toast.makeText(this, "CAMBIAR FOTO", Toast.LENGTH_LONG).show()
     }
 
     /*
@@ -235,10 +183,9 @@ class EntrantesActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         binding.recyclerRecipe.layoutManager = LinearLayoutManager(this)
         binding.recyclerRecipe.adapter = RecipeAdapter(RecipeProvider.recipeList,
-            {recipee -> onItemSelected(recipee) },
+            {recipee -> onItemSelected(recipee)},
             {recipee-> onPhotoSelected(recipee)},
-            {recipee-> onClickFav(recipee)}
-        )
+            {recipee-> onClickFav(recipee)})
     }
 
     /*

@@ -77,18 +77,18 @@
         tools:text="Primero se cuede, luego se hace otra cosa etc..."
         android:text="Primero se cuede, luego se hace otra cosa etc..."/>
 
-        <CheckBox
-            android:id="@+id/FavInfoRecipe"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="10dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/tiempoCoccion"
-            app:layout_constraintTop_toBottomOf="@+id/nombreReceta"
-            android:clickable="true"
-            android:focusable="true"
-            android:button="@drawable/star"/>
+    <CheckBox
+        android:id="@+id/FavInfoRecipe"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/tiempoCoccion"
+        app:layout_constraintTop_toBottomOf="@+id/nombreReceta"
+        android:clickable="true"
+        android:focusable="true"
+        android:button="@drawable/star"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

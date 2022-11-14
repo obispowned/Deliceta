@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.deliceta.RecipeProvider.Companion.recipeList
 import com.example.deliceta.adapter.RecipeAdapter
 import com.example.deliceta.application.App
+import com.example.deliceta.database.entities.Entrantes
 import com.example.deliceta.database.entities.Platos
 import com.example.deliceta.databinding.ActivityPlatosBinding
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,7 @@ class PlatosActivity : AppCompatActivity() {
             giveTheRecipes()
             initRecyclerView()
             refresh.isRefreshing = false
+
         }
     }
 
@@ -56,8 +58,12 @@ class PlatosActivity : AppCompatActivity() {
         binding.recyclerRecipe2.layoutManager = LinearLayoutManager(this)
         binding.recyclerRecipe2.adapter = RecipeAdapter(recipeList,
             {recipee -> onItemSelected(recipee) },
-            {recipee-> onPhotoSelected(recipee)}, {recipee-> onClickFav(recipee)}
-        )
+            {recipee-> onPhotoSelected(recipee)},
+            {recipee-> onClickFav(recipee)})
+    }
+
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
     }
 
     fun onItemSelected(recipe: Recipe) {
@@ -140,12 +146,6 @@ class PlatosActivity : AppCompatActivity() {
         Toast.makeText(this, recipe.recipename, Toast.LENGTH_LONG).show()
     }
 
-    fun onClickFav(recipe: Recipe){
-        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
-
-    }
-
-
     private fun giveTheRecipes() {
         lifecycleScope.launch {
             var platos: List<Platos> = withContext(Dispatchers.IO) {
@@ -172,14 +172,11 @@ class PlatosActivity : AppCompatActivity() {
         binding.nuevaReceta2.setOnClickListener {
             Toast.makeText(applicationContext, "Nueva Receta", Toast.LENGTH_SHORT).show()
 
-
             val builder = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.insertar_layout, null)
             builder.setView(view) //PASAMOS LA VISTA AL BUILDER
             val dialog = builder.create()
             dialog.show()
-
-
             val btnInsert: Button = view.findViewById(R.id.insertarDialog)
             btnInsert.setOnClickListener {
                 val nombrePlato: String =

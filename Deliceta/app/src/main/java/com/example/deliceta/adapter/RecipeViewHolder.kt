@@ -13,10 +13,9 @@ class RecipeViewHolder(view:View): RecyclerView.ViewHolder(view) {
 
     fun render(
         recipeModel: Recipe,
-        onClickListener: (Recipe) -> Unit,
-        onClickListener_photo: (Recipe) -> Unit,
-        onClickFav: (Recipe) -> Unit
-    ){
+        onClickListener:(Recipe) -> Unit,
+        onClickListener_photo:(Recipe) -> Unit,
+        onClickFav: (Recipe) -> Unit){
         if (recipeModel.recipename.length > 20)
             binding.nombreReceta.text = recipeModel.recipename.substring(0, 20) + "..."
         else

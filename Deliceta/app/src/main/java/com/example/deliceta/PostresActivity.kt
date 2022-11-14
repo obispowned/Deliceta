@@ -13,10 +13,12 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.deliceta.RecipeProvider.Companion.recipeList
 import com.example.deliceta.adapter.RecipeAdapter
 import com.example.deliceta.application.App
+import com.example.deliceta.database.entities.Platos
 import com.example.deliceta.database.entities.Postres
+import com.example.deliceta.databinding.ActivityEntrantesBinding
+import com.example.deliceta.databinding.ActivityPlatosBinding
 import com.example.deliceta.databinding.ActivityPostresBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,7 +37,7 @@ class PostresActivity : AppCompatActivity() {
         binding = ActivityPostresBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recipeList.clear()
+        RecipeProvider.recipeList.clear()
         giveTheRecipes()
         initRecyclerView()
         setupFloatingActionButton()
@@ -51,13 +53,6 @@ class PostresActivity : AppCompatActivity() {
             refresh.isRefreshing = false
         }
     }
-
-
-    fun onClickFav(recipe: Recipe){
-        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
-
-    }
-
 
     /*
 CUANDO SE HACE CLICK A UN ITEM
@@ -151,6 +146,10 @@ CUANDO SE HACE CLICK A UN ITEM
              {recipee -> onItemSelected(recipee) },
              {recipee-> onPhotoSelected(recipee)},
              {recipee-> onClickFav(recipee)})
+    }
+
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
     }
 
     private fun giveTheRecipes() {
