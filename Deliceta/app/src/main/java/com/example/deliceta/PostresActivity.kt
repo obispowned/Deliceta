@@ -13,12 +13,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.deliceta.RecipeProvider.Companion.recipeList
 import com.example.deliceta.adapter.RecipeAdapter
 import com.example.deliceta.application.App
-import com.example.deliceta.database.entities.Platos
 import com.example.deliceta.database.entities.Postres
-import com.example.deliceta.databinding.ActivityEntrantesBinding
-import com.example.deliceta.databinding.ActivityPlatosBinding
 import com.example.deliceta.databinding.ActivityPostresBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +35,7 @@ class PostresActivity : AppCompatActivity() {
         binding = ActivityPostresBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        RecipeProvider.recipeList.clear()
+        recipeList.clear()
         giveTheRecipes()
         initRecyclerView()
         setupFloatingActionButton()
@@ -53,6 +51,13 @@ class PostresActivity : AppCompatActivity() {
             refresh.isRefreshing = false
         }
     }
+
+
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
+
+    }
+
 
     /*
 CUANDO SE HACE CLICK A UN ITEM
@@ -142,7 +147,10 @@ CUANDO SE HACE CLICK A UN ITEM
 
     private fun initRecyclerView() {
          binding.recyclerRecipe3.layoutManager = LinearLayoutManager(this)
-         binding.recyclerRecipe3.adapter = RecipeAdapter(RecipeProvider.recipeList, {recipee -> onItemSelected(recipee) }, {recipee-> onPhotoSelected(recipee)})
+         binding.recyclerRecipe3.adapter = RecipeAdapter(RecipeProvider.recipeList,
+             {recipee -> onItemSelected(recipee) },
+             {recipee-> onPhotoSelected(recipee)},
+             {recipee-> onClickFav(recipee)})
     }
 
     private fun giveTheRecipes() {
@@ -158,6 +166,7 @@ CUANDO SE HACE CLICK A UN ITEM
                         recipetime = postres[i].duracion + " minutos",
                         recipeingredients = postres[i].ingredientes,
                         recipedescription = postres[i].descripcion,
+                        recipefav = postres[i].fav,
                         recipeurl = postres[i].urlphoto)
                 )
                 i++
@@ -197,6 +206,7 @@ CUANDO SE HACE CLICK A UN ITEM
                                     duracion = tiempoPostre,
                                     ingredientes = ingredientesPostre,
                                     descripcion = descripcionPostre,
+                                    fav = false,
                                     urlphoto = fotoPostre)
                             )
                         }

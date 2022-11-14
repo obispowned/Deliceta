@@ -11,7 +11,12 @@ class RecipeViewHolder(view:View): RecyclerView.ViewHolder(view) {
     val binding = ItemRecipeBinding.bind(view)
 
 
-    fun render(recipeModel: Recipe, onClickListener:(Recipe) -> Unit, onClickListener_photo:(Recipe) -> Unit){
+    fun render(
+        recipeModel: Recipe,
+        onClickListener: (Recipe) -> Unit,
+        onClickListener_photo: (Recipe) -> Unit,
+        onClickFav: (Recipe) -> Unit
+    ){
         if (recipeModel.recipename.length > 20)
             binding.nombreReceta.text = recipeModel.recipename.substring(0, 20) + "..."
         else
@@ -28,8 +33,9 @@ class RecipeViewHolder(view:View): RecyclerView.ViewHolder(view) {
         else
             binding.descripcion.text = recipeModel.recipedescription
         Glide.with(binding.photoreceta.context).load(recipeModel.recipeurl).into(binding.photoreceta)
-
+        binding.FavInfoRecipe.setChecked(recipeModel.recipefav)
         itemView.setOnClickListener { onClickListener(recipeModel) }
         binding.photoreceta.setOnClickListener { onClickListener_photo(recipeModel) }
+        binding.FavInfoRecipe.setOnClickListener{ onClickFav(recipeModel) }
     }
 }

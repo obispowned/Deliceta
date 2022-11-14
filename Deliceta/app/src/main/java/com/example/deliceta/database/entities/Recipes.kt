@@ -13,6 +13,7 @@ data class Entrantes (
     val duracion:String,
     val ingredientes:String,
     val descripcion:String,
+    var fav: Boolean,
     val urlphoto:String
     )
 
@@ -24,6 +25,7 @@ data class Platos (
     val duracion:String,
     val ingredientes:String,
     val descripcion:String,
+    var fav: Boolean,
     val urlphoto:String
 )
 
@@ -35,5 +37,6 @@ data class Postres (
     val duracion:String,
     val ingredientes:String,
     val descripcion:String,
+    var fav: Boolean,
     val urlphoto:String
 )

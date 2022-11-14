@@ -1,7 +1,6 @@
 package com.example.deliceta.database.dao
 
 import androidx.room.*
-import com.example.deliceta.database.entities.Entrantes
 import com.example.deliceta.database.entities.Platos
 
 @Dao

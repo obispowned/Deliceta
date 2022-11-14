@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.example.deliceta.RecipeProvider.Companion.recipeList
 import com.example.deliceta.adapter.RecipeAdapter
 import com.example.deliceta.application.App
-import com.example.deliceta.database.entities.Entrantes
 import com.example.deliceta.database.entities.Platos
 import com.example.deliceta.databinding.ActivityPlatosBinding
 import kotlinx.coroutines.Dispatchers
@@ -50,13 +49,15 @@ class PlatosActivity : AppCompatActivity() {
             giveTheRecipes()
             initRecyclerView()
             refresh.isRefreshing = false
-
         }
     }
 
     private fun initRecyclerView() {
         binding.recyclerRecipe2.layoutManager = LinearLayoutManager(this)
-        binding.recyclerRecipe2.adapter = RecipeAdapter(recipeList, {recipee -> onItemSelected(recipee) }, {recipee-> onPhotoSelected(recipee)})
+        binding.recyclerRecipe2.adapter = RecipeAdapter(recipeList,
+            {recipee -> onItemSelected(recipee) },
+            {recipee-> onPhotoSelected(recipee)}, {recipee-> onClickFav(recipee)}
+        )
     }
 
     fun onItemSelected(recipe: Recipe) {
@@ -139,6 +140,12 @@ class PlatosActivity : AppCompatActivity() {
         Toast.makeText(this, recipe.recipename, Toast.LENGTH_LONG).show()
     }
 
+    fun onClickFav(recipe: Recipe){
+        Toast.makeText(this, recipe.recipename,Toast.LENGTH_LONG).show()
+
+    }
+
+
     private fun giveTheRecipes() {
         lifecycleScope.launch {
             var platos: List<Platos> = withContext(Dispatchers.IO) {
@@ -152,6 +159,7 @@ class PlatosActivity : AppCompatActivity() {
                         recipetime = platos[i].duracion + " minutos",
                         recipeingredients = platos[i].ingredientes,
                         recipedescription = platos[i].descripcion,
+                        recipefav = platos[i].fav,
                         recipeurl = platos[i].urlphoto
                     )
                 )
@@ -194,6 +202,7 @@ class PlatosActivity : AppCompatActivity() {
                                     duracion = tiempoPlato,
                                     ingredientes = ingredientesPlato,
                                     descripcion = descripcionPlato,
+                                    fav = false,
                                     urlphoto = fotoPlato
                                 )
                             )
