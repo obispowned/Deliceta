@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deliceta.R
 import com.example.deliceta.Recipe
@@ -38,7 +37,4 @@ class RecipeAdapter(private val recipeList:List<Recipe>,
     interface OnLongClickInterface {
         fun onLongClick(itemView: View, position: Int)
     }
-
-
-
 }
